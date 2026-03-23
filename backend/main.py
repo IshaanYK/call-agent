@@ -27,10 +27,11 @@ call_data = {}
 current_campaign_theme = "Innovate AI service"
 public_url = ""
 
-OPENROUTER_API_KEY = "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"
-TWILIO_ACCOUNT_SID = "AC124df577479e2ead3fee12d67448ba89"
-TWILIO_AUTH_TOKEN = "7d6d6618ba0e1434de41a86a2aa080af"
-TWILIO_PHONE_NUMBER = "+13374150493"
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER", "")
+
 twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 # Secure key retrieval for GitHub repository safety
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
