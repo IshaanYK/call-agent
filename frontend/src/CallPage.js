@@ -22,11 +22,11 @@ function CallPage({ inlineCallId, onEndCall, autoStart }) {
                 pollStatus(data.sid);
             } else {
                 setStatus("Error: Call was not routed to Twilio (unverified number or credentials error).");
-                setTimeout(() => { if (onEndCall) onEndCall(); }, 4000);
+                setTimeout(() => { if (onEndCall) onEndCall("failed"); }, 4000);
             }
         } catch (err) {
             setStatus("Error starting call.");
-            setTimeout(() => { if (onEndCall) onEndCall(); }, 4000);
+            setTimeout(() => { if (onEndCall) onEndCall("failed"); }, 4000);
         }
     };
 
@@ -41,7 +41,7 @@ function CallPage({ inlineCallId, onEndCall, autoStart }) {
                     clearInterval(intervalRef.current);
                     setStatus(`Call ended (${data.status}). Moving to next...`);
                     setTimeout(() => {
-                        if (onEndCall) onEndCall();
+                        if (onEndCall) onEndCall(data.status);
                     }, 2000);
                 } else if (data.status === "in-progress") {
                     setStatus("Call is connected! (If you hear a Twilio Trial message, press ANY KEY on your dialpad to clear it and hear the AI!)");
@@ -74,7 +74,7 @@ function CallPage({ inlineCallId, onEndCall, autoStart }) {
             )}
 
             {inlineCallId && (
-                <button onClick={() => onEndCall && onEndCall()} style={{ padding: '10px 20px', fontSize: '16px', marginLeft: 10, background: '#ff4d4d', color: 'white', border: 'none', cursor: 'pointer' }}>
+                <button onClick={() => onEndCall && onEndCall("skipped")} style={{ padding: '10px 20px', fontSize: '16px', marginLeft: 10, background: '#ff4d4d', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>
                     Force Skip / End
                 </button>
             )}
